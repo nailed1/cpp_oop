@@ -11,6 +11,7 @@ public:
     Rational();
     Rational(int n);
     Rational(int n, int d);
+    Rational(double val);
     void quadratic_function(const Rational& a, const Rational& b, const Rational& c);
 
 
