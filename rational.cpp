@@ -144,7 +144,7 @@ Rational::Rational(double val) {
         long next_n = a * n + n_prev; n_prev = n; n = next_n;
         long next_d = a * d + d_prev; d_prev = d; d = next_d;
 
-        if (std::abs(val - a) < eps) break; // Останавливаемся, если дробная часть исчезла
+        if (abs(val - a) < eps) break;
         val = 1.0 / (val - a);
     }
     this->den = n;
