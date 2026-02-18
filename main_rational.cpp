@@ -12,4 +12,6 @@ int main(){
     cout << "double: " << j << endl;
     Rational r1(j);
     cout <<"double to rational: " << r1.num << "/" << r1.den << endl;
+    bool res = a>=b;
+    cout << res << endl;
 }
