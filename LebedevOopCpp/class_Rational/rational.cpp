@@ -69,6 +69,48 @@ Rational Rational::operator/(const Rational& r) const {
     return R /= r;
 }
 
+//мат операции rational с int
+Rational& Rational::operator+=(int x) {
+    return *this += Rational(x);
+}
+
+Rational Rational::operator+(int x) const {
+    Rational tmp(*this);
+    tmp += x;
+    return tmp;
+}
+
+Rational& Rational::operator-=(int x) {
+    return *this -= Rational(x);
+}
+
+Rational Rational::operator-(int x) const {
+    Rational tmp(*this);
+    tmp -= x;
+    return tmp;
+}
+
+Rational& Rational::operator*=(int x) {
+    return *this *= Rational(x);
+}
+
+Rational Rational::operator*(int x) const {
+    Rational tmp(*this);
+    tmp *= x;
+    return tmp;
+}
+
+Rational& Rational::operator/=(int x) {
+    return *this /= Rational(x);
+}
+
+Rational Rational::operator/(int x) const {
+    Rational tmp(*this);
+    tmp /= x;
+    return tmp;
+}
+
+
 //функция упрощения рациональной дроби с помощью алгоритма Евклида
 
 void Rational::simplify() {
@@ -141,7 +183,7 @@ void Rational::simplify() {
 //новая версия (используем новый вариант конструктора double-Rational)
 
 void Rational::quadratic_function(const Rational& a, const Rational& b, const Rational& c) {
-    Rational disc = b * b - Rational(4) * a * c;
+    Rational disc = b * b - 4 * a * c;
 
     if (double(disc) < 0) {
         cout << "no roots" << endl;
@@ -151,8 +193,8 @@ void Rational::quadratic_function(const Rational& a, const Rational& b, const Ra
     // sqrt дискриминанта — конвертируем double в Rational через новый конструктор
     Rational sqrt_disc(sqrt(double(disc)));
 
-    Rational neg_b = Rational(-1) * b;
-    Rational two_a = Rational(2) * a;
+    Rational neg_b = -1 * b;
+    Rational two_a = 2 * a;
 
     Rational x1 = (neg_b + sqrt_disc) / two_a;
     Rational x2 = (neg_b - sqrt_disc) / two_a;
@@ -228,4 +270,20 @@ bool Rational::operator>(const Rational& r) const {
 
 bool Rational::operator>=(const Rational& r) const {
     return !(*this < r);
+}
+
+Rational operator+(int x, const Rational& r) {
+    return Rational(x) + r;
+}
+
+Rational operator-(int x, const Rational& r) {
+    return Rational(x) - r;
+}
+
+Rational operator*(int x, const Rational& r) {
+    return Rational(x) * r;
+}
+
+Rational operator/(int x, const Rational& r) {
+    return Rational(x) / r;
 }

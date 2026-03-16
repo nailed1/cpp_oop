@@ -25,6 +25,19 @@ public:
     Rational& operator /=(const Rational& r);
     Rational operator / (const Rational& r) const;
 
+    //мат операции rational с int
+    Rational& operator+=(int x);
+    Rational  operator+(int x) const;
+
+    Rational& operator-=(int x);
+    Rational  operator-(int x) const;
+
+    Rational& operator*=(int x);
+    Rational  operator*(int x) const;
+
+    Rational& operator/=(int x);
+    Rational  operator/(int x) const;
+
     //перевод rational в другие типы
     operator int () const;
     operator double() const;
@@ -37,3 +50,8 @@ public:
     bool operator>(const Rational& r) const;
     bool operator>=(const Rational& r) const;
 };
+
+Rational operator + (int x, const Rational& r);
+Rational operator - (int x, const Rational& r);
+Rational operator * (int x, const Rational& r);
+Rational operator / (int x, const Rational& r);
