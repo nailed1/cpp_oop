@@ -7,7 +7,7 @@ N_values = []
 answers = []
 times = []
 
-with open('josephus_results.csv', 'r') as f:
+with open('/Users/nailed1/Documents/c++/cpp_oop/cpp_oop/LebedevOopCpp/class_array/josephus_results.csv', 'r') as f:
     reader = csv.DictReader(f)
     for row in reader:
         # Пропускаем строки с некорректными данными (комментарии и т.п.)
