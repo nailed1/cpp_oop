@@ -60,12 +60,12 @@ void testSetters() {
 void testNormalization() {
     cout << "Testing normalization... ";
     
-    DateTime dt(2024, 1, 1, 0, 0, 60);  // 60 seconds -> +1 minute
+    DateTime dt(2024, 1, 1, 0, 0, 60);  // 60 seconds - +1 minute
     assert(dt.getSecond() == 0);
     assert(dt.getMinute() == 1);
     
     dt.setDateTime(2024, 1, 1, 23, 59, 30);
-    dt = dt + 60;  // +60 seconds -> next day
+    dt = dt + 60;  // +60 seconds - next day
     assert(dt.getHour() == 0);
     assert(dt.getMinute() == 0);
     assert(dt.getDay() == 2);
@@ -145,15 +145,15 @@ void testLeapYear() {
     assert(dt1.getMonth() == 2);
     assert(dt1.getDay() == 29);
     
-    DateTime dt2(2023, 2, 29);  // 2023 is not leap, normalizes to Mar 1
+    DateTime dt2(2023, 2, 29);  // is not leap
     assert(dt2.getMonth() == 3);
     assert(dt2.getDay() == 1);
     
-    DateTime dt3(2000, 2, 29);  // 2000 is leap (divisible by 400)
+    DateTime dt3(2000, 2, 29);  // is leap
     assert(dt3.getMonth() == 2);
     assert(dt3.getDay() == 29);
     
-    DateTime dt4(1900, 2, 29);  // 1900 is not leap (divisible by 100 but not 400)
+    DateTime dt4(1900, 2, 29);  // is not leap
     assert(dt4.getMonth() == 3);
     assert(dt4.getDay() == 1);
     
