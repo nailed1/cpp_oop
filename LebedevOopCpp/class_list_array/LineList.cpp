@@ -1,7 +1,6 @@
 #ifndef LINELIST_CPP
 #define LINELIST_CPP
 #include "LineList.h"
-// Реализация методов LineListElem (Слайд 15)
 
 template<class T>
 LineListElem<T>::LineListElem(const T& adata, LineListElem<T>* anext) {
@@ -19,17 +18,22 @@ LineListElem<T>* LineListElem<T>::getNext() {
     return next;
 }
 
-// Реализация методов LineList (Слайды 16-20)
 
 template<class T>
 LineList<T>::LineList() {
     start = 0;
+    tail = 0;
 }
 
 template<class T>
 LineList<T>::~LineList() {
-    while (start) {
-        deleteFirst();
+    if (start) {
+        tail->next = 0;
+        while (start) {
+            LineListElem<T>* temp = start->next;
+            delete start;
+            start = temp;
+        }
     }
 }
 
@@ -39,17 +43,36 @@ LineListElem<T>* LineList<T>::getStart() {
 }
 
 template<class T>
+LineListElem<T>* LineList<T>::getTail() {
+    return tail;
+}
+
+template<class T>
 void LineList<T>::insertFirst(const T& data) {
-    LineListElem<T>* second = start;
-    start = new LineListElem<T>(data, second);
+    if (!start) {
+        start = new LineListElem<T>(data, nullptr);
+        start->next = start;
+        tail = start;
+    } else {
+        LineListElem<T>* second = start;
+        start = new LineListElem<T>(data, second);
+        tail->next = start;
+    }
 }
 
 template<class T>
 void LineList<T>::deleteFirst() {
     if (start) {
-        LineListElem<T>* temp = start->next;
-        delete start;
-        start = temp;
+        if (start == tail) {
+            delete start;
+            start = 0;
+            tail = 0;
+        } else {
+            LineListElem<T>* temp = start->next;
+            delete start;
+            start = temp;
+            tail->next = start;
+        }
     } else {
         throw LineListException();
     }
@@ -60,21 +83,30 @@ void LineList<T>::insertAfter(LineListElem<T>* ptr, const T& data) {
     if (ptr) {
         LineListElem<T>* temp = ptr->next;
         ptr->next = new LineListElem<T>(data, temp);
+        if (ptr == tail) {
+            tail = ptr->next;
+        }
     }
 }
 
 template<class T>
 void LineList<T>::deleteAfter(LineListElem<T>* ptr) {
     if (ptr && ptr->next) {
-        LineListElem<T>* temp = ptr->next;
-        ptr->next = ptr->next->next;
-        delete temp;
+        LineListElem<T>* toDelete = ptr->next;
+        if (toDelete == start) {
+            deleteFirst();
+            return;
+        }
+        ptr->next = toDelete->next;
+        if (toDelete == tail) {
+            tail = ptr;
+        }
+        delete toDelete;
     } else {
         throw LineListException();
     }
 }
 
-// Оператор вывода (Слайд 21)
 template<class T>
 std::ostream& operator<<(std::ostream& out, LineList<T>& list) {
     LineListElem<T>* ptr = list.start;
@@ -89,4 +121,4 @@ std::ostream& operator<<(std::ostream& out, LineList<T>& list) {
     return out;
 }
 
-#endif // LINELIST_CPP
+#endif
