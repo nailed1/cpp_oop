@@ -35,4 +35,7 @@
 *.out
 *.app
 
+
+#moon ignore
+.dat
 # End of https://www.toptal.com/developers/gitignore/api/c++
