@@ -45,6 +45,8 @@ class DateTime{
         
         DateTime operator+(int seconds) const;
         DateTime operator-(int seconds) const;
+        DateTime operator-(const DateTime& other) const;
+        DateTime operator+(const DateTime& other) const;
         bool operator==(const DateTime& other) const;
         bool operator!=(const DateTime& other) const;
         bool operator<(const DateTime& other) const;

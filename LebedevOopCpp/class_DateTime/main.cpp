@@ -115,11 +115,11 @@ void testDifferenceInDays() {
 
 void testOperators() {
     cout << "Testing operators... ";
-    
+
     DateTime dt1(2024, 1, 1, 12, 0, 0);
     DateTime dt2(2024, 1, 1, 12, 0, 0);
     DateTime dt3(2024, 1, 2, 12, 0, 0);
-    
+
     assert(dt1 == dt2);
     assert(dt1 != dt3);
     assert(dt1 < dt3);
@@ -128,13 +128,49 @@ void testOperators() {
     assert(dt1 >= dt2);
     assert(dt1 < dt3);
     assert(dt1 <= dt3);
-    
+
     DateTime dt4 = dt1 + 3600;  // +1 hour
     assert(dt4.getHour() == 13);
-    
+
     DateTime dt5 = dt4 - 3600;  // -1 hour
     assert(dt5.getHour() == 12);
-    
+
+    cout << "OK" << endl;
+}
+
+void testDateTimeOperators() {
+    cout << "Testing DateTime + DateTime and DateTime - DateTime... ";
+
+    DateTime dt1(2024, 1, 1, 10, 30, 0);
+    DateTime dt2(2024, 1, 11, 14, 45, 30);
+
+    DateTime diff1 = dt2 - dt1;
+    assert(diff1.getDay() == 10);
+    assert(diff1.getHour() == 4);
+    assert(diff1.getMinute() == 15);
+    assert(diff1.getSecond() == 30);
+
+    DateTime dt3(2024, 3, 1, 0, 0, 0);
+    DateTime dt4(2024, 2, 1, 0, 0, 0);
+    DateTime diff2 = dt3 - dt4;
+    assert(diff2.getDay() == 29);
+    assert(diff2.getHour() == 0);
+    assert(diff2.getMinute() == 0);
+    assert(diff2.getSecond() == 0);
+
+    DateTime dt5(2024, 1, 1, 12, 0, 0);
+    DateTime duration(0, 0, 0, 2, 30, 0);  // 2 hours 30 minutes
+    DateTime dt6 = dt5 + duration;
+    assert(dt6.getHour() == 14);
+    assert(dt6.getMinute() == 30);
+    assert(dt6.getDay() == 1);
+
+    DateTime dt7(2024, 1, 1, 23, 0, 0);
+    DateTime duration2(0, 0, 0, 2, 0, 0);  // 2 hours
+    DateTime dt8 = dt7 + duration2;
+    assert(dt8.getHour() == 1);
+    assert(dt8.getDay() == 2);
+
     cout << "OK" << endl;
 }
 
@@ -200,6 +236,7 @@ int main() {
     testPrintFormats();
     testDifferenceInDays();
     testOperators();
+    testDateTimeOperators();
     testLeapYear();
     testEaster();
     testInput();

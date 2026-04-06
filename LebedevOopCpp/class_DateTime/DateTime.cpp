@@ -188,6 +188,38 @@ DateTime DateTime::operator-(int seconds) const {
     return *this + (-seconds);
 }
 
+DateTime DateTime::operator-(const DateTime& other) const {
+    long long daysDiff = differenceInDays(other);
+    long long totalSeconds = daysDiff * 86400LL;
+    totalSeconds += (hour - other.hour) * 3600LL;
+    totalSeconds += (minute - other.minute) * 60LL;
+    totalSeconds += (second - other.second);
+    
+    bool negative = totalSeconds < 0;
+    if (negative) totalSeconds = -totalSeconds;
+    
+    long long days = totalSeconds / 86400LL;
+    int remaining = totalSeconds % 86400LL;
+    int hours = remaining / 3600;
+    remaining %= 3600;
+    int minutes = remaining / 60;
+    int seconds = remaining % 60;
+    
+    if (negative) {
+        days = -days;
+        hours = -hours;
+        minutes = -minutes;
+        seconds = -seconds;
+    }
+    
+    return DateTime(0, 0, days, hours, minutes, seconds);
+}
+
+DateTime DateTime::operator+(const DateTime& other) const {
+    long long totalSeconds = other.hour * 3600LL + other.minute * 60LL + other.second;
+    return *this + totalSeconds;
+}
+
 bool DateTime::operator==(const DateTime& other) const {
     return year == other.year && month == other.month && day == other.day &&
            hour == other.hour && minute == other.minute && second == other.second;
